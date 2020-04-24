@@ -1,0 +1,45 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'idea'
+    id 'org.jetbrains.kotlin.jvm' version '1.3.60'
+}
+
+group 'me.stylite.predator'
+version '1.0'
+
+sourceCompatibility = 1.8
+mainClassName = 'me.stylite.predator.Predator'
+
+repositories {
+    mavenCentral()
+    jcenter()
+    maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+    //Discord
+    implementation 'net.dv8tion:JDA:4.1.1_137'
+    implementation 'com.github.devoxin:flight:1.7.0'
+
+    //Kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+
+    //Logging
+    implementation 'org.apache.logging.log4j:log4j-core:2.11.1'
+    implementation 'org.apache.logging.log4j:log4j-slf4j-impl:2.11.1'
+    implementation 'org.apache.logging.log4j:log4j-api:2.11.1'
+
+    //Http
+    implementation 'com.github.jkcclemens:khttp:-SNAPSHOT'
+
+    //Misc
+    implementation 'com.google.code.gson:gson:2.8.6'
+}
+
+compileKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+compileTestKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
