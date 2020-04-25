@@ -116,17 +116,11 @@ class Apex : Cog {
     suspend fun news(ctx: Context) {
         val newNews = http.fetchNews()
         val news = gson.fromJson(newNews.body(), ApexNews::class.java).take(3)
-        val stringBuilder = StringBuilder()
-        for (new in news) {
-            stringBuilder.append("[${new.title}](${new.link})\n${new.short_desc}\n")
-        }
-        val em = EmbedBuilder()
-        em.setDescription(stringBuilder.toString())
-        em.setTitle("Apex legends news")
-        em.build()
+        val articles = news.joinToString("\n") { "[${it.title}](${it.link})\n${it.short_desc}" }
+
         ctx.sendAsync {
-            setTitle("Apex legends news")
-            setDescription(stringBuilder.toString().replace("&#x27;","'"))
+            setTitle("Apex Legends News")
+            setDescription(articles.replace("&#x27;","'"))
         }
     }
 }
