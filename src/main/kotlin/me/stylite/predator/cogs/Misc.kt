@@ -15,28 +15,28 @@ class Misc : Cog {
 
     @Command(description = "Info on the bot")
     fun info(ctx: Context) {
-        val stats = StringBuilder()
-        stats.append("```ini\nJDA: ${JDAInfo.VERSION}\n")
-            .append("Version: 1.0\n")
-            .append("Commands loaded: ${Predator.commandHandler.commands.size}\n")
-            .append("Guild Count: ${Predator.shardManager.guilds.size}\n")
-            .append("Shard Count: ${Predator.shardManager.shards.size}\n")
-            .append("Ping: ${Predator.shardManager.averageGatewayPing}ms\n")
-            .append("```")
-        ctx.send(stats.toString())
+        ctx.send("""
+            ```ini
+            JDA: ${JDAInfo.VERSION}
+            Version: 1.0
+            Commands Loaded: ${Predator.commandHandler.commands.size}
+            Guild Count: ${Predator.shardManager.guilds.size}
+            Ping: ${Predator.shardManager.averageGatewayPing}ms
+            ```
+        """.trimIndent())
     }
 
     @Command(description = "FAQ")
     fun faq(ctx: Context) {
         ctx.send {
-            setTitle("Frequently asked questions")
+            setTitle("Frequently Asked Questions")
             setDescription("**If your battlepass level shows as -1**\nDisplay the battlepass badge at least once on your character card and rerun the command")
         }
     }
 
     @Command(description = "Get links for the bot")
     fun invite(ctx: Context) {
-        val inviteLink = Predator.shardManager.retrieveApplicationInfo().complete().getInviteUrl()
+        val inviteLink = ctx.jda.getInviteUrl()
         ctx.send("Invite me: <$inviteLink>\nJoin my support server: https://discord.gg/sSzByu")
     }
 }

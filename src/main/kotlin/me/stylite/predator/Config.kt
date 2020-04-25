@@ -4,14 +4,13 @@ import java.io.FileInputStream
 import java.util.Properties
 
 object Config {
-    val conf: Properties = Properties()
+    private val conf = Properties().apply { load(FileInputStream("config.properties")) }
 
-    init {
-        conf.load(FileInputStream("config.properties"))
-    }
+    operator fun get(key: String) = conf.getProperty(key)?.takeIf { it.isNotEmpty() }
+        ?: throw IllegalStateException("$key is missing or was empty in config.properties!")
 
-    val prefix: String = conf.getProperty("prefix")
-    val token: String = conf.getProperty("token")
-    val api_key: String = conf.getProperty("apiKey")
+    val prefix = this["prefix"]
+    val token = this["token"]
+    val apiKey = this["apiKey"]
 
 }

@@ -1,7 +1,5 @@
 package me.stylite.predator.utils
 
-import kotlin.random.Random
-
 object RandomItems {
     val guns = setOf("VK-47 Flatline", "G7 Scout", "Hemlok Burst AR", "R-301 Carbine", "HAVOC Rifle",
         "Alternator SMG", "Prowler Burst PDW", "R-99",

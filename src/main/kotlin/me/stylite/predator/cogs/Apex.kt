@@ -13,19 +13,32 @@ import net.dv8tion.jda.api.EmbedBuilder
 
 
 class Apex : Cog {
+    private val http = Http()
+    private val gson = Gson()
 
-    val http = Http()
-    val gson = Gson()
+    private val validPlatforms = setOf("X1", "PS4", "PC")
+
     @Command(description = "Get stats of a player")
     suspend fun stats(ctx: Context, platform: String, username: String) {
-        val stats = http.fetchStats(platform, username)
-        val user = gson.fromJson(stats.body(), ApexProfile::class.java)
-        val stat = StringBuilder()
-        stat.append("Current legend: ${user.legends.selected.LegendName}\n")
-        user.legends.selected.data.forEach {
-            if (it.name == null) return@forEach
-            stat.append("${it.name}: ${it.value}\n")
+        val platformUpper = platform.toUpperCase()
+
+        if (platformUpper !in validPlatforms) {
+            return ctx.send("Invalid platform. ${validPlatforms.joinToString("`, `", prefix = "`", postfix = "`")}")
         }
+
+        val stats = http.fetchStats(platformUpper, username)
+
+        if (stats.statusCode() != 200) {
+            return ctx.send("No Apex Legends player found with that name. Check for spelling errors and try again.")
+        }
+
+        val user = gson.fromJson(stats.body(), ApexProfile::class.java)
+        val stat = StringBuilder("Current legend: ${user.legends.selected.LegendName}\n")
+
+        for (legend in user.legends.selected.data) {
+            stat.append(legend.name).append(": ").append(legend.value).append("\n")
+        }
+
         ctx.send {
             setTitle("Stats for $username")
             setDescription(stat.toString())
@@ -48,10 +61,10 @@ class Apex : Cog {
     suspend fun ranked(ctx: Context, platform: String, username: String) {
         val stats = http.fetchStats(platform, username)
         val user = gson.fromJson(stats.body(), ApexProfile::class.java)
-        val stat = StringBuilder()
-        stat.append("Current rank: ${user.global.rank.rankName}\n")
+        val stat = StringBuilder("Current rank: ${user.global.rank.rankName}\n")
             .append("Ranked score: ${user.global.rank.rankScore}\n")
             .append("Ranked division: ${user.global.rank.rankDiv}")
+
         ctx.send {
             setTitle("Stats for $username")
             setDescription(stat.toString())
