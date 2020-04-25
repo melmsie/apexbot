@@ -6,6 +6,6 @@ import me.devoxin.flight.api.hooks.DefaultCommandEventAdapter
 
 class EventHook : DefaultCommandEventAdapter() {
     override fun onCommandError(ctx: Context, command: CommandFunction, error: Throwable) {
-        ctx.send("```\n${error.localizedMessage}\n${error.stackTrace.joinToString("  \n").take(1800)}```")
+        ctx.send("```\n${error.localizedMessage}```")
     }
 }
