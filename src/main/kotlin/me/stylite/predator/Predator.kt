@@ -26,12 +26,12 @@ object Predator {
             .setIgnoreBots(true)
             .setOwnerIds(172571295077105664L, 218468138709155841L)
             .setAllowMentionPrefix(true)
+            .addEventListeners(EventHook())
             .build()
 
-        shardManager = DefaultShardManagerBuilder()
+        shardManager = DefaultShardManagerBuilder.createDefault(conf.token)
             .addEventListeners(commandHandler)
             .setActivity(Activity.watching("the kill leader || ${conf.prefix}help"))
-            .setToken(conf.token)
             .build()
 
         commandHandler.registerCommands("me.stylite.predator.cogs")

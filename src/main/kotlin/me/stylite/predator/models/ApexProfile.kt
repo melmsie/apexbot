@@ -80,96 +80,25 @@ data class All(
 )
 
 data class Selected(
-    val ImgAssets: ImgAssetsXXXXXXXXXXXX,
+    val ImgAssets: ImgAssets,
     val LegendName: String,
-    val `data`: List<DataX>
-)
-
-data class Bangalore(
-    val ImgAssets: ImgAssets
-)
-
-data class Bloodhound(
-    val ImgAssets: ImgAssetsX
-)
-
-data class Caustic(
-    val ImgAssets: ImgAssetsXX
-)
-
-data class Crypto(
-    val ImgAssets: ImgAssetsXXX
-)
-
-data class Gibraltar(
-    val ImgAssets: ImgAssetsXXXX
-)
-
-data class Lifeline(
-    val ImgAssets: ImgAssetsXXXXX
-)
-
-data class Mirage(
-    val ImgAssets: ImgAssetsXXXXXX
-)
-
-data class Octane(
-    val ImgAssets: ImgAssetsXXXXXXX,
     val `data`: List<Data>
 )
 
-data class Pathfinder(
-    val ImgAssets: ImgAssetsXXXXXXXX
-)
-
-data class Revenant(
-    val ImgAssets: ImgAssetsXXXXXXXXX
-)
-
-data class Wattson(
-    val ImgAssets: ImgAssetsXXXXXXXXXX
-)
-
-data class Wraith(
-    val ImgAssets: ImgAssetsXXXXXXXXXXX
-)
+data class Bangalore(val ImgAssets: ImgAssets)
+data class Bloodhound(val ImgAssets: ImgAssets)
+data class Caustic(val ImgAssets: ImgAssets)
+data class Crypto(val ImgAssets: ImgAssets)
+data class Gibraltar(val ImgAssets: ImgAssets)
+data class Lifeline(val ImgAssets: ImgAssets)
+data class Mirage(val ImgAssets: ImgAssets)
+data class Octane(val ImgAssets: ImgAssets, val `data`: List<Data>)
+data class Pathfinder(val ImgAssets: ImgAssets)
+data class Revenant(val ImgAssets: ImgAssets)
+data class Wattson(val ImgAssets: ImgAssets)
+data class Wraith(val ImgAssets: ImgAssets)
 
 data class ImgAssets(
-    val banner: String,
-    val icon: String
-)
-
-data class ImgAssetsX(
-    val banner: String,
-    val icon: String
-)
-
-data class ImgAssetsXX(
-    val banner: String,
-    val icon: String
-)
-
-data class ImgAssetsXXX(
-    val banner: String,
-    val icon: String
-)
-
-data class ImgAssetsXXXX(
-    val banner: String,
-    val icon: String
-)
-
-data class ImgAssetsXXXXX(
-    val banner: String,
-    val icon: String
-)
-
-data class ImgAssetsXXXXXX(
-    val banner: String,
-    val icon: String
-)
-
-data class ImgAssetsXXXXXXX(
     val banner: String,
     val icon: String
 )
@@ -180,37 +109,6 @@ data class Data(
     val value: Int
 )
 
-data class ImgAssetsXXXXXXXX(
-    val banner: String,
-    val icon: String
-)
-
-data class ImgAssetsXXXXXXXXX(
-    val banner: String,
-    val icon: String
-)
-
-data class ImgAssetsXXXXXXXXXX(
-    val banner: String,
-    val icon: String
-)
-
-data class ImgAssetsXXXXXXXXXXX(
-    val banner: String,
-    val icon: String
-)
-
-data class ImgAssetsXXXXXXXXXXXX(
-    val banner: String,
-    val icon: String
-)
-
-data class DataX(
-    val key: Any,
-    val name: Any,
-    val value: Int
-)
-
 data class RateLimit(
     val current_req: String,
     val max_per_second: Int
@@ -218,7 +116,7 @@ data class RateLimit(
 
 data class Kd(
     val name: String,
-    val value: Int
+    val value: Float
 )
 
 data class Kills(

@@ -7,46 +7,65 @@ import java.net.http.HttpRequest
 import java.net.http.HttpResponse
 import java.time.Duration
 import me.stylite.predator.Config
+import okhttp3.HttpUrl
 
 class Http {
+    private val apiUrl = "https://api.mozambiquehe.re"
+    private val apiKey = Config.apiKey
 
-    val apiKey: String = Config.api_key
-    private val client: HttpClient = HttpClient.newBuilder()
-        .version(HttpClient.Version.HTTP_2)
+    private val client = HttpClient.newBuilder()
+        .version(HttpClient.Version.HTTP_1_1)
         .followRedirects(HttpClient.Redirect.NEVER)
         .connectTimeout(Duration.ofSeconds(20))
         .build()
 
-    suspend fun fetchStats(platform: String, username: String): HttpResponse<String> {
-        val request = HttpRequest.newBuilder()
-            .timeout(Duration.ofSeconds(20))
-            .uri(URI.create("https://api.mozambiquehe.re/bridge?version=4&platform=$platform&player=$username&auth=$apiKey"))
-            .build()
-        val response = client.sendAsync(request, HttpResponse.BodyHandlers.ofString());
-        return response.await()
+    suspend fun fetchStats(platform: String, username: String) = fetch {
+        buildUrl("$apiUrl/bridge", mapOf("version" to "4", "platform" to platform, "player" to username, "auth" to apiKey))
     }
-    suspend fun fetchNews(): HttpResponse<String> {
-        val request = HttpRequest.newBuilder()
-            .timeout(Duration.ofSeconds(20))
-            .uri(URI.create("https://api.mozambiquehe.re/news.php?lang=en-us&auth=$apiKey"))
-            .build()
-        val response = client.sendAsync(request, HttpResponse.BodyHandlers.ofString());
-        return response.await()
+
+    suspend fun fetchNews() = fetch {
+        buildUrl("$apiUrl/news.php", mapOf("lang" to "en-us", "auth" to apiKey))
     }
-    suspend fun fetchStatus(): HttpResponse<String> {
-        val request = HttpRequest.newBuilder()
-            .timeout(Duration.ofSeconds(20))
-            .uri(URI.create("https://apexlegendsstatus.com/servers.json"))
-            .build()
-        val response = client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
-        return response.await()
+
+    suspend fun fetchStatus() = fetch {
+        uri("https://apexlegendsstatus.com/servers.json")
     }
+
     suspend fun fetchHistory(platform: String, username: String): HttpResponse<String> {
+        val params = mapOf(
+            "version" to "4",
+            "platform" to platform,
+            "player" to username,
+            "history" to "3",
+            "action" to "get",
+            "auth" to apiKey
+        )
+
+        return fetch {
+            buildUrl("$apiUrl/bridge", params)
+        }
+    }
+
+    private suspend fun fetch(opts: HttpRequest.Builder.() -> Unit): HttpResponse<String> {
         val request = HttpRequest.newBuilder()
             .timeout(Duration.ofSeconds(20))
-            .uri(URI.create("https://api.mozambiquehe.re/bridge?version=4&platform=$platform&player=$username&auth=$apiKey&history=3&action=get"))
+            .apply(opts)
             .build()
-        val response = client.sendAsync(request, HttpResponse.BodyHandlers.ofString());
-        return response.await()
+
+        return client.sendAsync(request, HttpResponse.BodyHandlers.ofString()).await()
+    }
+
+    private fun HttpRequest.Builder.buildUrl(url: String, queryParams: Map<String, String> = mapOf()) {
+        val builder = HttpUrl.get(url).newBuilder()
+
+        for ((key, value) in queryParams) {
+            builder.setQueryParameter(key, value)
+        }
+
+        this.uri(builder.build().uri()) // God bless OkHttp
+    }
+
+    private fun HttpRequest.Builder.uri(uri: String) {
+        this.uri(URI.create(uri))
     }
 }
