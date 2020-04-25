@@ -14,17 +14,19 @@ import me.stylite.predator.utils.RandomItems
 import net.dv8tion.jda.api.EmbedBuilder
 import java.net.http.HttpResponse
 
-val locations = mapOf(
-    "we" to listOf("SKYHOOK", "SURVEY CAMP", "REFINERY", "THE EPICENTER", "DRILL SITE", "FRAGMENT WEST", "FRAGMENT EAST", "OVERLOOK", "LAVA FISSURE", "THE TRAIN YARD", "MIRAGE VOYAGE", "HARVESTER", "THE GEYSER", "THERMAL STATION", "SORTING FACTORY", "THE TREE", "LAVA CITY", "THE DOME"),
-    "kc" to listOf("ARTILLERY", "SLUM LAKES", "RELAY", "CONTAINMENT", "THE PIT", "WETLANDS", "RUNOFF", "BUNKER", "LABS", "SWAMPS", "AIRBASE", "THE CAGE", "HYDRO DAM", "MARKET", "SKULL TOWN", "REPULSOR", "THUNDERDOME", "WATER TREATMENT")
-)
-val aliases = mapOf("worlds edge" to "we", "kings canyon" to "kc")
-
 class Apex : Cog {
     private val http = Http()
     private val gson = Gson()
 
+    private val locations = mapOf(
+        "we" to listOf("SKYHOOK", "SURVEY CAMP", "REFINERY", "THE EPICENTER", "DRILL SITE", "FRAGMENT WEST", "FRAGMENT EAST", "OVERLOOK", "LAVA FISSURE", "THE TRAIN YARD", "MIRAGE VOYAGE", "HARVESTER", "THE GEYSER", "THERMAL STATION", "SORTING FACTORY", "THE TREE", "LAVA CITY", "THE DOME"),
+        "kc" to listOf("ARTILLERY", "SLUM LAKES", "RELAY", "CONTAINMENT", "THE PIT", "WETLANDS", "RUNOFF", "BUNKER", "LABS", "SWAMPS", "AIRBASE", "THE CAGE", "HYDRO DAM", "MARKET", "SKULL TOWN", "REPULSOR", "THUNDERDOME", "WATER TREATMENT")
+    )
     private val validPlatforms = setOf("X1", "PS4", "PC")
+    private val aliases = mapOf(
+        "worlds edge" to "we",
+        "kings canyon" to "kc"
+    )
     private val colors = mapOf(
         "Bangalore" to 0x7c635f,
         "Bloodhound" to 0xc14340,
@@ -91,7 +93,11 @@ class Apex : Cog {
     }
 
     @Command(description = "Gives a random location for you to drop in!")
-    fun drop(ctx: Context, @Greedy map: String) {
+    fun drop(ctx: Context, @Greedy map: String?) {
+        if (map == null) {
+            return ctx.send("Usage: `${ctx.trigger}drop <we/kc>`\nExample: `${ctx.trigger}drop we`")
+        }
+
         val lowered = map.toLowerCase()
         val mapName = aliases[lowered] ?: lowered
         val location = locations[mapName]?.random()
