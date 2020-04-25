@@ -23,6 +23,7 @@ class Apex : Cog {
         val stat = StringBuilder()
         stat.append("Current legend: ${user.legends.selected.LegendName}\n")
         user.legends.selected.data.forEach {
+            if (it.name == null) return@forEach
             stat.append("${it.name}: ${it.value}\n")
         }
         ctx.send {
