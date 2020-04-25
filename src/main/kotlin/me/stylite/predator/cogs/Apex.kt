@@ -11,6 +11,7 @@ import me.stylite.predator.utils.Http
 import me.stylite.predator.utils.RandomItems
 import net.dv8tion.jda.api.EmbedBuilder
 
+val colors = mapOf("Bangalore" to 0x7c635f, "Bloodhound" to 0xc14340, "Caustic" to 0xcaa757, "Crypto" to 0xbbd266, "Gibraltar" to 0xe5e0da, "Lifeline" to 0x8eb5e0, "Mirage" to 0xe49419, "Octane" to 0x999a54, "Pathfinder" to 0xfafd69, "Revenant" to 0x9c5052, "Wattson" to 0xe2914f, "Wraith" to 0x545ca2)
 
 class Apex : Cog {
 
@@ -28,6 +29,7 @@ class Apex : Cog {
         }
         ctx.send {
             setTitle("Stats for $username")
+            setColor(colors[user.legends.selected.LegendName] ?: 0xffffff)
             setDescription(stat.toString())
             setThumbnail(user.legends.selected.ImgAssets.icon)
             setFooter("Info provided https://mozambiquehe.re/")
