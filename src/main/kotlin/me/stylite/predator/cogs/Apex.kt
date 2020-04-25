@@ -3,6 +3,7 @@ package me.stylite.predator.cogs
 import com.google.gson.Gson
 import me.devoxin.flight.api.Context
 import me.devoxin.flight.api.annotations.Command
+import me.devoxin.flight.api.annotations.Greedy
 import me.devoxin.flight.api.entities.Cog
 import me.stylite.predator.models.ApexNews
 import me.stylite.predator.models.ApexOauthPC
@@ -11,6 +12,11 @@ import me.stylite.predator.utils.Http
 import me.stylite.predator.utils.RandomItems
 import net.dv8tion.jda.api.EmbedBuilder
 
+val locations = mapOf(
+    "we" to listOf("SKYHOOK", "SURVEY CAMP", "REFINERY", "THE EPICENTER", "DRILL SITE", "FRAGMENT WEST", "FRAGMENT EAST", "OVERLOOK", "LAVA FISSURE", "THE TRAIN YARD", "MIRAGE VOYAGE", "HARVESTER", "THE GEYSER", "THERMAL STATION", "SORTING FACTORY", "THE TREE", "LAVA CITY", "THE DOME"),
+    "kc" to listOf("ARTILLERY", "SLUM LAKES", "RELAY", "CONTAINMENT", "THE PIT", "WETLANDS", "RUNOFF", "BUNKER", "LABS", "SWAMPS", "AIRBASE", "THE CAGE", "HYDRO DAM", "MARKET", "SKULL TOWN", "REPULSOR", "THUNDERDOME", "WATER TREATMENT")
+)
+val aliases = mapOf("worlds edge" to "we", "kings canyon" to "kc")
 val colors = mapOf("Bangalore" to 0x7c635f, "Bloodhound" to 0xc14340, "Caustic" to 0xcaa757, "Crypto" to 0xbbd266, "Gibraltar" to 0xe5e0da, "Lifeline" to 0x8eb5e0, "Mirage" to 0xe49419, "Octane" to 0x999a54, "Pathfinder" to 0xfafd69, "Revenant" to 0x9c5052, "Wattson" to 0xe2914f, "Wraith" to 0x545ca2)
 
 class Apex : Cog {
@@ -37,12 +43,25 @@ class Apex : Cog {
     }
 
 
-    @Command(description = "Gives a random loadout and legend")
+    @Command(description = "Gives a random loadout and legend for you to drop with as a challenge")
     fun random(ctx: Context) {
        val loadout =  RandomItems.generateLoadout()
         ctx.send {
             setTitle("Here's a random loadout")
             setDescription(loadout)
+        }
+    }
+
+    @Command(description = "Gives a random location for you to drop in!")
+    fun drop(ctx: Context, @Greedy map: String) {
+        val lowered = map.toLowerCase()
+        val mapName = aliases[lowered] ?: lowered
+        val location = locations[mapName]?.random()
+            ?: return ctx.send("Valid map choices are `\"we\"` (world's edge) and `\"kc\"` (king's canyon)")
+
+        ctx.send {
+            setTitle("Here's a random location")
+            setDescription("You should drop at **$location** for an EZ win")
         }
     }
 
