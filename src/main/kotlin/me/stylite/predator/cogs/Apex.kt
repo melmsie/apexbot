@@ -4,6 +4,7 @@ import com.google.gson.Gson
 import me.devoxin.flight.api.Context
 import me.devoxin.flight.api.annotations.Command
 import me.devoxin.flight.api.entities.Cog
+import me.stylite.predator.models.APIException
 import me.stylite.predator.models.ApexNews
 import me.stylite.predator.models.ApexOauthPC
 import me.stylite.predator.models.ApexProfile
@@ -32,7 +33,14 @@ class Apex : Cog {
             return ctx.send("No Apex Legends player found with that name. Check for spelling errors and try again.")
         }
 
-        val user = gson.fromJson(stats.body(), ApexProfile::class.java)
+        val response = stats.body()
+
+        if (response.contains("Error")) {
+            val err = gson.fromJson(response, APIException::class.java)
+            return ctx.send(err.message)
+        }
+
+        val user = gson.fromJson(response, ApexProfile::class.java)
         val stat = StringBuilder("Current legend: ${user.legends.selected.LegendName}\n")
 
         for (legend in user.legends.selected.data) {
