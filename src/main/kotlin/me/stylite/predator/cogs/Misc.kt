@@ -25,4 +25,18 @@ class Misc : Cog {
             .append("```")
         ctx.send(stats.toString())
     }
+
+    @Command(description = "FAQ")
+    fun faq(ctx: Context) {
+        ctx.send {
+            setTitle("Frequently asked questions")
+            setDescription("**If your battlepass level shows as -1**\nDisplay the battlepass badge at least once on your character card and rerun the command")
+        }
+    }
+
+    @Command(description = "Get links for the bot")
+    fun invite(ctx: Context) {
+        val inviteLink = Predator.shardManager.retrieveApplicationInfo().complete().getInviteUrl()
+        ctx.send("Invite me: <$inviteLink>\nJoin my support server: https://discord.gg/sSzByu")
+    }
 }

@@ -8,6 +8,7 @@ import me.stylite.predator.models.ApexNews
 import me.stylite.predator.models.ApexOauthPC
 import me.stylite.predator.models.ApexProfile
 import me.stylite.predator.utils.Http
+import me.stylite.predator.utils.RandomItems
 import net.dv8tion.jda.api.EmbedBuilder
 
 
@@ -21,7 +22,9 @@ class Apex : Cog {
         val user = gson.fromJson(stats.body(), ApexProfile::class.java)
         val stat = StringBuilder()
         stat.append("Current legend: ${user.legends.selected.LegendName}\n")
-            .append("Kills: ${user.total.kills.value}\n")
+        user.legends.selected.data.forEach {
+            stat.append("${it.name}: ${it.value}\n")
+        }
         ctx.send {
             setTitle("Stats for $username")
             setDescription(stat.toString())
@@ -30,25 +33,24 @@ class Apex : Cog {
         }
     }
 
+
+    @Command(description = "Gives a random loadout and legend")
+    fun random(ctx: Context) {
+       val loadout =  RandomItems.generateLoadout()
+        ctx.send {
+            setTitle("Here's a random loadout")
+            setDescription(loadout)
+        }
+    }
+
     @Command(description = "Ranked stats on a player")
     suspend fun ranked(ctx: Context, platform: String, username: String) {
-        var plat: String = platform
-        if (platform == "pc") {
-            plat = "PC"
-        }
-        if (platform == "ps") {
-            plat = "PS4"
-        }
-        if (platform == "xbox") {
-            plat = "X1"
-        }
-
         val stats = http.fetchStats(platform, username)
         val user = gson.fromJson(stats.body(), ApexProfile::class.java)
         val stat = StringBuilder()
         stat.append("Current rank: ${user.global.rank.rankName}\n")
             .append("Ranked score: ${user.global.rank.rankScore}\n")
-            .append("Ranked divison: ${user.global.rank.rankDiv}")
+            .append("Ranked division: ${user.global.rank.rankDiv}")
         ctx.send {
             setTitle("Stats for $username")
             setDescription(stat.toString())

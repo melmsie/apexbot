@@ -41,4 +41,12 @@ class Http {
         val response = client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
         return response.await()
     }
+    suspend fun fetchHistory(platform: String, username: String): HttpResponse<String> {
+        val request = HttpRequest.newBuilder()
+            .timeout(Duration.ofSeconds(20))
+            .uri(URI.create("https://api.mozambiquehe.re/bridge?version=4&platform=$platform&player=$username&auth=$apiKey&history=3&action=get"))
+            .build()
+        val response = client.sendAsync(request, HttpResponse.BodyHandlers.ofString());
+        return response.await()
+    }
 }

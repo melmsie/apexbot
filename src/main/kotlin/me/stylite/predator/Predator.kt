@@ -30,7 +30,7 @@ object Predator {
 
         shardManager = DefaultShardManagerBuilder()
             .addEventListeners(commandHandler)
-            .setActivity(Activity.watching("the kill leader"))
+            .setActivity(Activity.watching("the kill leader || ${conf.prefix}help"))
             .setToken(conf.token)
             .build()
 

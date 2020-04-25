@@ -207,7 +207,7 @@ data class ImgAssetsXXXXXXXXXXXX(
 
 data class DataX(
     val key: Any,
-    val name: String,
+    val name: Any,
     val value: Int
 )
 
