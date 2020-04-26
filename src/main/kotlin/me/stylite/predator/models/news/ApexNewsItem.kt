@@ -1,4 +1,4 @@
-package me.stylite.predator.models
+package me.stylite.predator.models.news
 
 data class ApexNewsItem(
     val img: String,

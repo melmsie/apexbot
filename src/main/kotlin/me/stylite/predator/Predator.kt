@@ -9,6 +9,7 @@ import net.dv8tion.jda.api.sharding.DefaultShardManager
 import net.dv8tion.jda.api.sharding.DefaultShardManagerBuilder
 import net.dv8tion.jda.api.sharding.ShardManager
 import me.stylite.predator.Config
+import me.stylite.predator.utils.Resources
 
 object Predator {
     lateinit var shardManager: ShardManager
@@ -33,6 +34,5 @@ object Predator {
             .build()
 
         commandHandler.registerCommands("me.stylite.predator.cogs")
-
     }
 }

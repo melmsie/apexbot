@@ -1,4 +1,6 @@
-package me.stylite.predator.models
+package me.stylite.predator.models.stats
+
+import me.stylite.predator.models.servers.*
 
 data class ApexOauthPC(
     val Africa: Africa,

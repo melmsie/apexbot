@@ -1,6 +1,8 @@
-package me.stylite.predator.models
+package me.stylite.predator.models.stats
 
-data class ApexOauthPS4(
+import me.stylite.predator.models.servers.*
+
+data class ApexOauthX1(
     val Africa: Africa,
     val Asia: Asia,
     val EUEast: EUEast,

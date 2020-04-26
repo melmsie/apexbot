@@ -4,15 +4,14 @@ import com.google.gson.Gson
 import me.devoxin.flight.api.Context
 import me.devoxin.flight.api.annotations.Command
 import me.devoxin.flight.api.annotations.Greedy
+import me.devoxin.flight.api.entities.Attachment
 import me.devoxin.flight.api.entities.Cog
 import me.stylite.predator.models.APIException
-import me.stylite.predator.models.ApexNews
-import me.stylite.predator.models.ApexOauthPC
-import me.stylite.predator.models.ApexProfile
+import me.stylite.predator.models.news.ApexNews
+import me.stylite.predator.models.stats.ApexProfile
 import me.stylite.predator.utils.Http
+import me.stylite.predator.utils.Imaging
 import me.stylite.predator.utils.RandomItems
-import net.dv8tion.jda.api.EmbedBuilder
-import java.net.http.HttpResponse
 
 class Apex : Cog {
     private val http = Http()
@@ -50,7 +49,7 @@ class Apex : Cog {
         "Wraith" to 0x545ca2
     )
 
-    suspend fun apiCommand(ctx: Context, platform: String, username: String, transform: ApexProfile.() -> Unit) {
+    suspend fun apiCommand(ctx: Context, platform: String, username: String, transform: suspend ApexProfile.() -> Unit) {
         val platformUpper = platform.toUpperCase()
 
         if (platformUpper !in validPlatforms) {
@@ -174,4 +173,20 @@ class Apex : Cog {
             setDescription(articles.replace("&#x27;","'"))
         }
     }
+
+    @Command(description = "Profile???", developerOnly = true)
+    suspend fun profile(ctx: Context, platform: String, @Greedy username: String) = apiCommand(ctx, platform, username) {
+        val genStart = System.currentTimeMillis()
+        val card = Imaging.generateProfileCard(this)
+        val genEnd = System.currentTimeMillis()
+        println("Profile card generated in ${genEnd - genStart}ms")
+        val attachment = Attachment.from(card, "profile.png")
+        ctx.send(attachment)
+    }
+
+//    @Command(description = "View information on the Apex server status")
+//    suspend fun service(ctx: Context) {
+//        val status = http.fetchStatus()
+//        val ds = gson.fromJson(status, )
+//    }
 }

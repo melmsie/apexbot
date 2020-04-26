@@ -1,3 +1,3 @@
-package me.stylite.predator.models
+package me.stylite.predator.models.news
 
 class ApexNews : ArrayList<ApexNewsItem>()

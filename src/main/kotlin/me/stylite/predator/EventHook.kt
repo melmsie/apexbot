@@ -8,7 +8,8 @@ import me.devoxin.flight.api.hooks.DefaultCommandEventAdapter
 class EventHook : DefaultCommandEventAdapter() {
 
     override fun onCommandError(ctx: Context, command: CommandFunction, error: Throwable) {
-        ctx.send("```\n${error.localizedMessage}```")
+        ctx.send("uwu there was a fucky wucky, we're sowwy!")
+        error.printStackTrace()
     }
 
     override fun onBadArgument(ctx: Context, command: CommandFunction, error: BadArgument) {

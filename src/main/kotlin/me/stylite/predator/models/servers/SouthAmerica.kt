@@ -1,4 +1,4 @@
-package me.stylite.predator.models
+package me.stylite.predator.models.servers
 
 data class SouthAmerica(
     val HTTPCode: Int,

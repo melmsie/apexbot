@@ -1,6 +1,6 @@
-package me.stylite.predator.models
+package me.stylite.predator.models.servers
 
-data class USWest(
+data class EUWest(
     val HTTPCode: Int,
     val QueryTimestamp: Int,
     val ResponseTime: Int,
