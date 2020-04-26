@@ -24,7 +24,7 @@ object Predator {
         commandHandler = CommandClientBuilder()
             .setPrefixes(conf.prefix)
             .registerDefaultParsers()
-            .setOwnerIds(172571295077105664L, 218468138709155841L)
+            .setOwnerIds(172571295077105664L, 218468138709155841L, 180093157554388993L)
             .addEventListeners(EventHook())
             .build()
 
