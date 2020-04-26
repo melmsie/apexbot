@@ -4,30 +4,15 @@ import kotlinx.coroutines.future.await
 import me.stylite.predator.models.stats.ApexProfile
 import java.awt.Color
 import java.awt.RenderingHints
-import java.awt.image.BufferedImage
 import java.io.ByteArrayOutputStream
-import java.io.InputStream
-import java.net.URI
-import java.net.http.HttpClient
-import java.net.http.HttpRequest
-import java.net.http.HttpResponse
 import java.util.concurrent.CompletableFuture
 import javax.imageio.ImageIO
 
 object Imaging {
-    private val http = HttpClient.newHttpClient()
 
     suspend fun generateProfileCard(profile: ApexProfile): ByteArray {
         return CompletableFuture.supplyAsync { generateProfileCard0(profile) }
             .await()
-    }
-
-    fun downloadImage(url: String): InputStream {
-        val request = HttpRequest.newBuilder()
-            .uri(URI.create(url))
-            .build()
-
-        return http.send(request, HttpResponse.BodyHandlers.ofInputStream()).body()
     }
 
     private fun generateProfileCard0(profile: ApexProfile): ByteArray {
@@ -39,6 +24,8 @@ object Imaging {
         val white = Color(255, 255, 255)
         val barRed = Color(218, 41, 42)
         val black = Color(0, 0, 0)
+        val gray = Color(168, 168, 168)
+        val lightGray = Color(191, 191, 191)
 
         val base = ImageIO.read(Resources.card)
         val gfx = base.createGraphics()
@@ -47,12 +34,10 @@ object Imaging {
         gfx.font = headerFont
         gfx.color = white
 
-        val metrics = gfx.fontMetrics
-        val width = metrics.stringWidth(profile.global.name)
-        println("width: $width")
-        val nameX = 251 + (221 - width) / 2
-        // 292
-        gfx.drawString(profile.global.name, nameX, 143 + metrics.ascent)
+        val nameMetrics = gfx.fontMetrics
+        val width = nameMetrics.stringWidth(profile.global.name)
+        val nameX = 251 + (221 - width) / 2  // 292
+        gfx.drawString(profile.global.name, nameX, 143 + nameMetrics.ascent)
 
         val barWidth = (219 * (profile.global.toNextLevelPercent.toDouble() / 100)).toInt()
         gfx.color = barRed
@@ -60,9 +45,12 @@ object Imaging {
 
         gfx.font = barFont
         gfx.color = black
-        gfx.drawString("Level ${profile.global.level}", 314, 188 + (metrics.height / 2))
 
-        val legend = Resources.legend(profile.legends.selected.LegendName.decapitalize())
+        val levelMetrics = gfx.fontMetrics
+        gfx.drawString("Level ${profile.global.level}", 314, 187 + levelMetrics.ascent)
+
+        val legendName = profile.legends.selected.LegendName
+        val legend = Resources.legend(legendName.decapitalize())
         val legendImg = ImageIO.read(legend)
 
         val aspectRatio = legendImg.width.toDouble() / legendImg.height
@@ -76,8 +64,24 @@ object Imaging {
             else -> 78
         }
 
-        println(heightAdjust)
         gfx.drawImage(image, 0, heightAdjust, null)
+
+        gfx.font = headerFont
+        gfx.color = gray
+
+        val legendWidth = nameMetrics.stringWidth(legendName)
+        val legendNameX = 11 + (221 - legendWidth) / 2
+        gfx.drawString(legendName, legendNameX, 432 + nameMetrics.ascent)
+
+        gfx.font = barFont
+        gfx.color = lightGray
+        //gfx.drawString("Total Kills: ${profile.total.kills.value}", 13, 488)
+
+        val entries = profile.legends.selected.data.filter { it.name != null }.take(6)
+        for ((i, entry) in entries.withIndex()) {
+            val offset = 472 + (28 * (i + 1))
+            gfx.drawString("${entry.name}: ${entry.value}", 13, offset)
+        }
 
         gfx.dispose()
 
