@@ -29,7 +29,7 @@ object Predator {
 
         shardManager = DefaultShardManagerBuilder.createDefault(conf.token)
             .addEventListeners(commandHandler)
-            .setActivity(Activity.watching("the kill leader || ${conf.prefix}help"))
+            .setActivity(Activity.watching("the kill leader || ${conf.prefix.first()}help"))
             .build()
 
         commandHandler.registerCommands("me.stylite.predator.cogs")
