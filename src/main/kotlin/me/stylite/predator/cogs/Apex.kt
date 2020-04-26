@@ -74,7 +74,7 @@ class Apex : Cog {
     }
 
     @Command(description = "Get stats of a player")
-    suspend fun stats(ctx: Context, platform: String, username: String) = apiCommand(ctx, platform, username) {
+    suspend fun stats(ctx: Context, platform: String, @Greedy username: String) = apiCommand(ctx, platform, username) {
         val stat = StringBuilder("**Current legend**: ${legends.selected.LegendName}\n")
 
         for (legend in legends.selected.data.filter { it.name != null }) {
@@ -134,7 +134,7 @@ class Apex : Cog {
     }
 
     @Command(description = "Ranked stats on a player")
-    suspend fun ranked(ctx: Context, platform: String, username: String) = apiCommand(ctx, platform, username) {
+    suspend fun ranked(ctx: Context, platform: String, @Greedy username: String) = apiCommand(ctx, platform, username) {
         val stat = StringBuilder("**Current rank**: ${global.rank.rankName}\n")
             .append("**Ranked score**: ${global.rank.rankScore}\n")
             .append("**Ranked division**: ${global.rank.rankDiv}")
@@ -148,7 +148,7 @@ class Apex : Cog {
     }
 
     @Command(description = "Global stats on a player")
-    suspend fun global(ctx: Context, platform: String, username: String) = apiCommand(ctx, platform, username) {
+    suspend fun global(ctx: Context, platform: String, @Greedy username: String) = apiCommand(ctx, platform, username) {
         val stat = StringBuilder("**Level**: ${global.level}\n")
             .append("**Rank**: ${global.rank.rankName}\n")
             .append("**Percent to next level**: ${global.toNextLevelPercent}\n")
