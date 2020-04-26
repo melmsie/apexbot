@@ -105,7 +105,7 @@ data class ImgAssets(
 
 data class Data(
     val key: String,
-    val name: String,
+    val name: String?,
     val value: Int
 )
 

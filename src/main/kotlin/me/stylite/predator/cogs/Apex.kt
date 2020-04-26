@@ -78,7 +78,7 @@ class Apex : Cog {
     suspend fun stats(ctx: Context, platform: String, username: String) = apiCommand(ctx, platform, username) {
         val stat = StringBuilder("**Current legend**: ${legends.selected.LegendName}\n")
 
-        for (legend in legends.selected.data) {
+        for (legend in legends.selected.data.filter { it.name != null }) {
             stat.append("**").append(legend.name).append("**: ").append(legend.value).append("\n")
         }
 
