@@ -27,6 +27,14 @@ class Apex : Cog {
         "worlds edge" to "we",
         "kings canyon" to "kc"
     )
+    private val realMapName = mapOf(
+        "we" to "World's edge",
+        "kc" to "King's canyon"
+    )
+    private val mapImages = mapOf(
+        "we" to "https://cdn.discordapp.com/attachments/703277951277596823/703751520180633640/Screen_Shot_2020-04-25_at_7.37.03_PM.png",
+        "kc" to "https://i.imgur.com/xTvittM.png"
+    )
     private val colors = mapOf(
         "Bangalore" to 0x7c635f,
         "Bloodhound" to 0xc14340,
@@ -106,6 +114,23 @@ class Apex : Cog {
         ctx.send {
             setTitle("Here's a random location")
             setDescription("You should drop at **$location** for an EZ win")
+        }
+    }
+
+    @Command(description = "Gives an image of a selected map!")
+    fun map(ctx: Context, @Greedy map: String?) {
+        if (map == null) {
+            return ctx.send("Usage: `${ctx.trigger}map <we/kc>`\nExample: `${ctx.trigger}map we`")
+        }
+
+        val lowered = map.toLowerCase()
+        val mapName = aliases[lowered] ?: lowered
+        val image = mapImages[lowered] ?: mapName
+        val actualName = realMapName[lowered] ?: lowered
+
+        ctx.send {
+            setTitle(actualName)
+            setImage(image)
         }
     }
 
