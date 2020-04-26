@@ -9,7 +9,7 @@ object Config {
     operator fun get(key: String) = conf.getProperty(key)?.takeIf { it.isNotEmpty() }
         ?: throw IllegalStateException("$key is missing or was empty in config.properties!")
 
-    val prefix = this["prefix"]
+    val prefix = this["prefix"].split(", ")
     val token = this["token"]
     val apiKey = this["apiKey"]
 
