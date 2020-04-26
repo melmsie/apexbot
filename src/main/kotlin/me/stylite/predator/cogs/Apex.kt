@@ -32,8 +32,8 @@ class Apex : Cog {
         "kc" to "King's canyon"
     )
     private val mapImages = mapOf(
-        "we" to "https://cdn.discordapp.com/attachments/703277951277596823/703751520180633640/Screen_Shot_2020-04-25_at_7.37.03_PM.png",
-        "kc" to "https://i.imgur.com/xTvittM.png"
+        "kc" to "https://cdn.discordapp.com/attachments/703277951277596823/703751520180633640/Screen_Shot_2020-04-25_at_7.37.03_PM.png",
+        "we" to "https://i.imgur.com/xTvittM.png"
     )
     private val colors = mapOf(
         "Bangalore" to 0x7c635f,
