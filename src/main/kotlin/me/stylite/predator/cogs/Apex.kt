@@ -95,7 +95,7 @@ class Apex : Cog {
     fun random(ctx: Context) {
        val loadout = RandomItems.generateLoadout()
         ctx.send {
-            setTitle("Here's a random loadout")
+            setTitle("Here's your random loadout ${ctx.author.name}")
             setDescription(loadout)
         }
     }
