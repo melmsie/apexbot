@@ -177,14 +177,13 @@ class Apex : Cog {
         }
     }
 
-    /*
     @Command(description = "Displays your statistics in a profile card")
     @Cooldown(5, TimeUnit.SECONDS, BucketType.USER)
     suspend fun profile(ctx: Context, platform: String, @Greedy username: String) = apiCommand(ctx, platform, username) {
         val card = Imaging.generateProfileCard(this)
         val attachment = Attachment.from(card, "profile.png")
         ctx.send(attachment)
-    } */
+    }
 
 //    @Command(description = "View information on the Apex server status")
 //    suspend fun service(ctx: Context) {

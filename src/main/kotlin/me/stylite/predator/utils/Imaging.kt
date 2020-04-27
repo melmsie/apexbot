@@ -3,6 +3,7 @@ package me.stylite.predator.utils
 import kotlinx.coroutines.future.await
 import me.stylite.predator.models.stats.ApexProfile
 import java.awt.Color
+import java.awt.Font
 import java.awt.Image
 import java.awt.RenderingHints
 import java.awt.image.BufferedImage
@@ -59,10 +60,13 @@ object Imaging {
         gfx.font = barFont
         gfx.color = black
 
-        val levelMetrics = gfx.fontMetrics
-        val levelWidth = levelMetrics.stringWidth("Level ${profile.global.level}")
+        val levelMetrics = gfx.getFontMetrics(barFont)
+        val barText = "Level ${profile.global.level}"
+        val levelWidth = levelMetrics.stringWidth(barText)
         val levelX = 252 + (221 - levelWidth) / 2
-        gfx.drawString("Level ${profile.global.level}", levelX, 187 + levelMetrics.ascent)
+        val glyphVector = barFont.layoutGlyphVector(gfx.fontRenderContext, barText.toCharArray(), 0, barText.length, Font.LAYOUT_LEFT_TO_RIGHT)
+        val levelY = 190 + glyphVector.visualBounds.height.toInt()
+        gfx.drawString("Level ${profile.global.level}", levelX, levelY)
 
         val legendName = profile.legends.selected.LegendName
         val legend = Resources.legend(legendName.decapitalize())
