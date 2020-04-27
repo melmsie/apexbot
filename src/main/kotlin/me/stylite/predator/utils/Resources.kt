@@ -9,6 +9,9 @@ object Resources {
     val card: InputStream
         get() = this::class.java.classLoader.getResourceAsStream("card.png")!!
 
+    val battlepass: InputStream
+        get() = this::class.java.classLoader.getResourceAsStream("battlepass.png")!!
+
     val font = Font.createFont(Font.TRUETYPE_FONT, defaultFont)
 
     fun legend(name: String) = this::class.java.classLoader.getResourceAsStream("legends/$name.png")!!

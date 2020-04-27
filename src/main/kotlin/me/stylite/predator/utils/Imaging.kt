@@ -3,7 +3,9 @@ package me.stylite.predator.utils
 import kotlinx.coroutines.future.await
 import me.stylite.predator.models.stats.ApexProfile
 import java.awt.Color
+import java.awt.Image
 import java.awt.RenderingHints
+import java.awt.image.BufferedImage
 import java.io.ByteArrayOutputStream
 import java.util.concurrent.CompletableFuture
 import javax.imageio.ImageIO
@@ -13,6 +15,12 @@ object Imaging {
     suspend fun generateProfileCard(profile: ApexProfile): ByteArray {
         return CompletableFuture.supplyAsync { generateProfileCard0(profile) }
             .await()
+    }
+
+    private fun scale(bufferedImage: BufferedImage, width: Int, preserveAspectRatio: Boolean = true): Image {
+        val aspectRatio = bufferedImage.width.toDouble() / bufferedImage.height
+        val newHeight = (width / aspectRatio).toInt()
+        return bufferedImage.getScaledInstance(width, newHeight, bufferedImage.type)
     }
 
     private fun generateProfileCard0(profile: ApexProfile): ByteArray {
@@ -49,17 +57,17 @@ object Imaging {
         gfx.color = black
 
         val levelMetrics = gfx.fontMetrics
-        // TODO: X Adjustment here
-        gfx.drawString("Level ${profile.global.level}", 314, 187 + levelMetrics.ascent)
+        val levelWidth = levelMetrics.stringWidth("Level ${profile.global.level}")
+        val levelX = 252 + (221 - levelWidth) / 2
+        gfx.drawString("Level ${profile.global.level}", levelX, 187 + levelMetrics.ascent)
 
         val legendName = profile.legends.selected.LegendName
         val legend = Resources.legend(legendName.decapitalize())
         val legendImg = ImageIO.read(legend)
 
         val aspectRatio = legendImg.width.toDouble() / legendImg.height
-        val newWidth = 244 // Fixed
-        val newHeight = (newWidth / aspectRatio).toInt()
-        val image = legendImg.getScaledInstance(newWidth, newHeight, legendImg.type)
+        val newHeight = (244 / aspectRatio).toInt()
+        val image = scale(legendImg, 244)
 
         val heightAdjust = when {
             newHeight > 336 -> 78 - (newHeight - 336)
@@ -90,14 +98,25 @@ object Imaging {
         val riResource = Resources.rank("${rank.rankName.decapitalize()}${rank.rankDiv}")
         val rankIcon = ImageIO.read(riResource)
 
-        gfx.drawImage(rankIcon, 300, 248, null)
+        gfx.drawImage(rankIcon, 300, 240, null)
 
         gfx.color = notQuiteWhite
-        gfx.drawString("${rank.rankName} (Division ${rank.rankDiv})", 280, 365 + nameMetrics.ascent)
+        gfx.drawString("${rank.rankName} (Division ${rank.rankDiv})", 280, 357 + nameMetrics.ascent)
 
-        //gfx.font = subText
         val subTextMetrics = gfx.fontMetrics
-        gfx.drawString("Ranked Score: ${rank.rankScore}", 280, 400 + subTextMetrics.ascent)
+        gfx.drawString("Ranked Score: ${rank.rankScore}", 280, 392 + subTextMetrics.ascent)
+
+        val bpBadge = Resources.battlepass
+        val bpIcon = ImageIO.read(bpBadge)
+        val scaledBp = scale(bpIcon, 105)
+
+        gfx.drawImage(scaledBp, 300, 437, null)
+
+        gfx.font = barFont
+
+        val bpLevelWidth = levelMetrics.stringWidth("Level: ${profile.global.battlepass.level}")
+        val bpLevelX = 300 + (105 - bpLevelWidth) / 2
+        gfx.drawString("Level: ${profile.global.battlepass.level}", bpLevelX, 585)
 
         gfx.dispose()
 
