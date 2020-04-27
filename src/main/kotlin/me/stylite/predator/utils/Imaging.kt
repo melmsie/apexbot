@@ -12,6 +12,8 @@ import java.util.concurrent.CompletableFuture
 import javax.imageio.ImageIO
 
 object Imaging {
+    val legends = listOf("bangalore", "bloodhound", "caustic", "crypto", "gibraltar", "lifeline", "mirage", "octane", "pathfinder", "revenant", "wattson", "wraith")
+    var index = 0
 
     suspend fun generateProfileCard(profile: ApexProfile): ByteArray {
         return CompletableFuture.supplyAsync { generateProfileCard0(profile) }
@@ -74,6 +76,7 @@ object Imaging {
         gfx.drawString("Level ${profile.global.level}", levelX, levelY)
 
         val legendName = profile.legends.selected.LegendName
+        //val legendName = legends[index++ % legends.size].capitalize() // Cycle intensifies
         val legend = Resources.legend(legendName.decapitalize())
         val legendImg = ImageIO.read(legend)
 
@@ -82,6 +85,7 @@ object Imaging {
         val image = scale(legendImg, 244)
 
         val heightAdjust = when {
+            legendName == "Revenant" -> 61
             newHeight > 336 -> 78 - (newHeight - 336)
             newHeight < 336 -> 78 + (336 - newHeight)
             else -> 78
@@ -126,7 +130,8 @@ object Imaging {
 
         gfx.font = font24
 
-        val bpLevelWidth = font24Metrics.stringWidth("Level: ${profile.global.battlepass.level}")
+        val bpLevelInt = profile.global.battlepass.level.toIntOrNull()?.coerceAtLeast(0) ?: 0
+        val bpLevelWidth = font24Metrics.stringWidth("Level: $bpLevelInt")
         val bpLevelX = 310 + (105 - bpLevelWidth) / 2
         gfx.drawString("Level: ${profile.global.battlepass.level}", bpLevelX, 585)
 
