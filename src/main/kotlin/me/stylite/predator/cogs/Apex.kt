@@ -180,10 +180,7 @@ class Apex : Cog {
     @Command(description = "Displays your statistics in a profile card")
     @Cooldown(5, TimeUnit.SECONDS, BucketType.USER)
     suspend fun profile(ctx: Context, platform: String, @Greedy username: String) = apiCommand(ctx, platform, username) {
-        val genStart = System.currentTimeMillis()
         val card = Imaging.generateProfileCard(this)
-        val genEnd = System.currentTimeMillis()
-        println("Profile card generated in ${genEnd - genStart}ms")
         val attachment = Attachment.from(card, "profile.png")
         ctx.send(attachment)
     }
