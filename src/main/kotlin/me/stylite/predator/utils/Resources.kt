@@ -12,4 +12,5 @@ object Resources {
     val font = Font.createFont(Font.TRUETYPE_FONT, defaultFont)
 
     fun legend(name: String) = this::class.java.classLoader.getResourceAsStream("legends/$name.png")!!
+    fun rank(name: String) = this::class.java.classLoader.getResourceAsStream("ranks/$name.png")!!
 }

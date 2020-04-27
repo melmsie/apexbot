@@ -20,8 +20,10 @@ object Imaging {
         // Fonts
         val headerFont = baseFont.deriveFont(32f)
         val barFont = baseFont.deriveFont(24f)
+        val subText = baseFont.deriveFont(18f)
         // Colors
         val white = Color(255, 255, 255)
+        val notQuiteWhite = Color(235, 235, 235)
         val barRed = Color(218, 41, 42)
         val black = Color(0, 0, 0)
         val gray = Color(168, 168, 168)
@@ -47,6 +49,7 @@ object Imaging {
         gfx.color = black
 
         val levelMetrics = gfx.fontMetrics
+        // TODO: X Adjustment here
         gfx.drawString("Level ${profile.global.level}", 314, 187 + levelMetrics.ascent)
 
         val legendName = profile.legends.selected.LegendName
@@ -73,7 +76,7 @@ object Imaging {
         val legendNameX = 11 + (221 - legendWidth) / 2
         gfx.drawString(legendName, legendNameX, 432 + nameMetrics.ascent)
 
-        gfx.font = barFont
+        gfx.font = subText
         gfx.color = lightGray
         //gfx.drawString("Total Kills: ${profile.total.kills.value}", 13, 488)
 
@@ -82,6 +85,19 @@ object Imaging {
             val offset = 472 + (28 * (i + 1))
             gfx.drawString("${entry.name}: ${entry.value}", 13, offset)
         }
+
+        val rank = profile.global.rank
+        val riResource = Resources.rank("${rank.rankName.decapitalize()}${rank.rankDiv}")
+        val rankIcon = ImageIO.read(riResource)
+
+        gfx.drawImage(rankIcon, 300, 248, null)
+
+        gfx.color = notQuiteWhite
+        gfx.drawString("${rank.rankName} (Division ${rank.rankDiv})", 280, 365 + nameMetrics.ascent)
+
+        //gfx.font = subText
+        val subTextMetrics = gfx.fontMetrics
+        gfx.drawString("Ranked Score: ${rank.rankScore}", 280, 400 + subTextMetrics.ascent)
 
         gfx.dispose()
 
