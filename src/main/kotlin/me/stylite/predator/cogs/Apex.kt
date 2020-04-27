@@ -3,8 +3,10 @@ package me.stylite.predator.cogs
 import com.google.gson.Gson
 import me.devoxin.flight.api.Context
 import me.devoxin.flight.api.annotations.Command
+import me.devoxin.flight.api.annotations.Cooldown
 import me.devoxin.flight.api.annotations.Greedy
 import me.devoxin.flight.api.entities.Attachment
+import me.devoxin.flight.api.entities.BucketType
 import me.devoxin.flight.api.entities.Cog
 import me.stylite.predator.models.APIException
 import me.stylite.predator.models.news.ApexNews
@@ -12,6 +14,7 @@ import me.stylite.predator.models.stats.ApexProfile
 import me.stylite.predator.utils.Http
 import me.stylite.predator.utils.Imaging
 import me.stylite.predator.utils.RandomItems
+import java.util.concurrent.TimeUnit
 
 class Apex : Cog {
     private val http = Http()
@@ -175,6 +178,7 @@ class Apex : Cog {
     }
 
     @Command(description = "Profile???", developerOnly = true)
+    @Cooldown(5, TimeUnit.SECONDS, BucketType.USER)
     suspend fun profile(ctx: Context, platform: String, @Greedy username: String) = apiCommand(ctx, platform, username) {
         val genStart = System.currentTimeMillis()
         val card = Imaging.generateProfileCard(this)
