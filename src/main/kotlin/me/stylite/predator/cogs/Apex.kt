@@ -93,7 +93,7 @@ class Apex : Cog {
         }
     }
 
-    @Command(description = "(usage) [test/ok] <mhm> Gives a random loadout and legend for you to drop with as a challenge")
+    @Command(description = "Gives a random loadout and legend for you to drop with as a challenge")
     fun random(ctx: Context) {
        val loadout = RandomItems.generateLoadout()
         ctx.send {
