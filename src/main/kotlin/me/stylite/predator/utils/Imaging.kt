@@ -17,7 +17,10 @@ object Imaging {
             .await()
     }
 
-    private fun scale(bufferedImage: BufferedImage, width: Int, preserveAspectRatio: Boolean = true): Image {
+    /**
+     * Scales an image, preserving its aspect ratio.
+     */
+    private fun scale(bufferedImage: BufferedImage, width: Int): Image {
         val aspectRatio = bufferedImage.width.toDouble() / bufferedImage.height
         val newHeight = (width / aspectRatio).toInt()
         return bufferedImage.getScaledInstance(width, newHeight, bufferedImage.type)
@@ -110,12 +113,12 @@ object Imaging {
         val bpIcon = ImageIO.read(bpBadge)
         val scaledBp = scale(bpIcon, 105)
 
-        gfx.drawImage(scaledBp, 300, 437, null)
+        gfx.drawImage(scaledBp, 310, 437, null)
 
         gfx.font = barFont
 
         val bpLevelWidth = levelMetrics.stringWidth("Level: ${profile.global.battlepass.level}")
-        val bpLevelX = 300 + (105 - bpLevelWidth) / 2
+        val bpLevelX = 310 + (105 - bpLevelWidth) / 2
         gfx.drawString("Level: ${profile.global.battlepass.level}", bpLevelX, 585)
 
         gfx.dispose()

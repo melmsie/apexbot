@@ -177,7 +177,7 @@ class Apex : Cog {
         }
     }
 
-    @Command(description = "Profile???", developerOnly = true)
+    @Command(description = "Displays your statistics in a profile card")
     @Cooldown(5, TimeUnit.SECONDS, BucketType.USER)
     suspend fun profile(ctx: Context, platform: String, @Greedy username: String) = apiCommand(ctx, platform, username) {
         val genStart = System.currentTimeMillis()
