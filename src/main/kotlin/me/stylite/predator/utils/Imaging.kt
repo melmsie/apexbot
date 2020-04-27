@@ -131,7 +131,7 @@ object Imaging {
         val bpLevelInt = profile.global.battlepass.level.toIntOrNull()?.coerceAtLeast(0) ?: 0
         val bpLevelWidth = font24Metrics.stringWidth("Level: $bpLevelInt")
         val bpLevelX = 310 + (105 - bpLevelWidth) / 2
-        gfx.drawString("Level: ${profile.global.battlepass.level}", bpLevelX, 585)
+        gfx.drawString("Level: $bpLevelInt", bpLevelX, 585)
 
         gfx.dispose()
 
