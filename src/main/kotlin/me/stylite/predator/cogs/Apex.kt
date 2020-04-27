@@ -53,13 +53,13 @@ class Apex : Cog {
         val platformUpper = platform.toUpperCase()
 
         if (platformUpper !in validPlatforms) {
-            return ctx.send("Invalid platform. ${validPlatforms.joinToString("`, `", prefix = "`", postfix = "`")}")
+            return ctx.send("Invalid platform. ${validPlatforms.joinToString("`, `", prefix = "`", postfix = "`")}\nExample: `a)command [X1/PS4/PC] [Username]`")
         }
 
         val stats = http.fetchStats(platformUpper, username)
 
         if (stats.statusCode() != 200) {
-            return ctx.send("No Apex Legends player found with that name. Check for spelling errors and try again.")
+            return ctx.send("No Apex Legends player found with that name on that platform. Check for spelling errors and try again.")
         }
 
         val response = stats.body()
@@ -86,11 +86,11 @@ class Apex : Cog {
             setTitle("Stats for ${global.name} [${platform.toUpperCase()}]")
             setDescription(stat.toString())
             setThumbnail(legends.selected.ImgAssets.icon)
-            setFooter("Info provided https://mozambiquehe.re/")
+            setFooter("Info provided by https://mozambiquehe.re/")
         }
     }
 
-    @Command(description = "Gives a random loadout and legend for you to drop with as a challenge")
+    @Command(description = "(usage) [test/ok] <mhm> Gives a random loadout and legend for you to drop with as a challenge")
     fun random(ctx: Context) {
        val loadout = RandomItems.generateLoadout()
         ctx.send {
@@ -116,7 +116,7 @@ class Apex : Cog {
         }
     }
 
-    @Command(description = "Gives an image of a selected map!")
+    @Command(description = "Gives an image of the selected map!")
     fun map(ctx: Context, @Greedy map: String?) {
         if (map == null) {
             return ctx.send("Usage: `${ctx.trigger}map <we/kc>`\nExample: `${ctx.trigger}map we`")
@@ -143,7 +143,7 @@ class Apex : Cog {
             setTitle("Stats for ${global.name} [${platform.toUpperCase()}]")
             setDescription(stat.toString())
             setThumbnail(global.rank.rankImg)
-            setFooter("Info provided https://mozambiquehe.re/")
+            setFooter("Info provided by https://mozambiquehe.re/")
         }
     }
 
@@ -158,11 +158,11 @@ class Apex : Cog {
             setTitle("Stats for ${global.name} [${platform.toUpperCase()}]")
             setThumbnail(legends.selected.ImgAssets.icon)
             setDescription(stat.toString())
-            setFooter("Info provided https://mozambiquehe.re/")
+            setFooter("Info provided by https://mozambiquehe.re/")
         }
     }
 
-    @Command(description = "Get recent Apex news")
+    @Command(description = "Get the most recent Apex news")
     suspend fun news(ctx: Context) {
         val newNews = http.fetchNews()
         val news = gson.fromJson(newNews.body(), ApexNews::class.java).take(3)

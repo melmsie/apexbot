@@ -8,7 +8,7 @@ import me.devoxin.flight.api.hooks.DefaultCommandEventAdapter
 class EventHook : DefaultCommandEventAdapter() {
 
     override fun onCommandError(ctx: Context, command: CommandFunction, error: Throwable) {
-        ctx.send("uwu there was a fucky wucky, we're sowwy!")
+        ctx.send("There was an error, gibby will be angry...")
         error.printStackTrace()
     }
 
