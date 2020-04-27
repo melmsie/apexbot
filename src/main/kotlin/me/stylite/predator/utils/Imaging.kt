@@ -12,8 +12,6 @@ import java.util.concurrent.CompletableFuture
 import javax.imageio.ImageIO
 
 object Imaging {
-    val legends = listOf("bangalore", "bloodhound", "caustic", "crypto", "gibraltar", "lifeline", "mirage", "octane", "pathfinder", "revenant", "wattson", "wraith")
-    var index = 0
 
     suspend fun generateProfileCard(profile: ApexProfile): ByteArray {
         return CompletableFuture.supplyAsync { generateProfileCard0(profile) }
