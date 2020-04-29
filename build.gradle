@@ -33,6 +33,7 @@ dependencies {
 
     //Misc
     implementation 'com.google.code.gson:gson:2.8.6'
+    implementation 'org.discordbots:DBL-Java-Library:2.0.1'
 }
 
 compileKotlin {

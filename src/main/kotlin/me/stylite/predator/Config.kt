@@ -12,5 +12,6 @@ object Config {
     val prefix = this["prefix"].split(", ")
     val token = this["token"]
     val apiKey = this["apiKey"]
+    val dblKey = this["dblkey"]
 
 }

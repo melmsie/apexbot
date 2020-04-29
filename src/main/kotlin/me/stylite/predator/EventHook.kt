@@ -21,4 +21,5 @@ class EventHook : DefaultCommandEventAdapter() {
         ctx.send("Too fast! (Wait ${Utils.toTimeString(cooldown)})")
     }
 
+
 }

@@ -2,18 +2,21 @@ package me.stylite.predator
 
 import me.devoxin.flight.api.CommandClient
 import java.io.FileInputStream
-import java.util.Properties
 import me.devoxin.flight.api.CommandClientBuilder
 import net.dv8tion.jda.api.entities.Activity
 import net.dv8tion.jda.api.sharding.DefaultShardManager
 import net.dv8tion.jda.api.sharding.DefaultShardManagerBuilder
 import net.dv8tion.jda.api.sharding.ShardManager
 import me.stylite.predator.Config
+import org.slf4j.Logger
 import me.stylite.predator.utils.Resources
+import org.slf4j.LoggerFactory
+import java.util.*
 
 object Predator {
     lateinit var shardManager: ShardManager
     lateinit var commandHandler: CommandClient
+    lateinit var log: Logger
 
 
     @ExperimentalStdlibApi
@@ -28,8 +31,9 @@ object Predator {
             .addEventListeners(EventHook())
             .build()
 
+        log = LoggerFactory.getLogger("Predator")
         shardManager = DefaultShardManagerBuilder.createDefault(conf.token)
-            .addEventListeners(commandHandler)
+            .addEventListeners(commandHandler, JdaEvents)
             .setActivity(Activity.watching("the kill leader || ${conf.prefix.first()}help"))
             .build()
 
