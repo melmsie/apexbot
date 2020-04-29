@@ -25,4 +25,4 @@ config.properties
 build/
 .gradle/
 .idea/
-
+out/
