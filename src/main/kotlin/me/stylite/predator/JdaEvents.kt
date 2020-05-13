@@ -6,6 +6,6 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter
 
 object JdaEvents : ListenerAdapter() {
     override fun onReady(event: ReadyEvent) {
-        DblTimer.postStats()
+       DblTimer.postStats()
     }
 }

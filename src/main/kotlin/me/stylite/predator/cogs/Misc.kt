@@ -20,6 +20,7 @@ class Misc : Cog {
             JDA: ${JDAInfo.VERSION}
             Version: 1.0
             Commands Loaded: ${Predator.commandHandler.commands.size}
+            Shards: ${Predator.shardManager.shards.size}
             Guild Count: ${Predator.shardManager.guilds.size}
             Ping: ${Predator.shardManager.averageGatewayPing}ms
             ```
@@ -30,7 +31,13 @@ class Misc : Cog {
     fun faq(ctx: Context) {
         ctx.send {
             setTitle("Frequently Asked Questions")
-            setDescription("**If your battlepass level shows as -1**\nDisplay the battlepass badge at least once on your character card and rerun the command")
+            setDescription("""
+                **If your battlepass level shows as -1**
+                Display the battlepass badge at least once on your character card and rerun the command.
+                **If your battlepass level shows as the last seasons battlepass level**
+                Redisplay your new battlepass level badge on your character card and rerun the command.
+            """.trimIndent()
+            )
         }
     }
 
