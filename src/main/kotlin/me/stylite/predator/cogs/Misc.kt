@@ -27,14 +27,11 @@ class Misc : Cog {
         """.trimIndent())
     }
 
-    @Command(description = "Post stats to DBL")
+    @Command(description = "Post stats to DBL", developerOnly = true)
     fun posttodbl(ctx: Context) {
         val guildCount = Predator.shardManager.guilds.size
-        val devIDs = setOf<Long>(218468138709155841L, 180093157554388993L, 172571295077105664L)
-        if(devIDs.contains(ctx.author.idLong)) {
-            Predator.dbl.setStats(guildCount)
-            ctx.send("Posted guild count")
-        }
+        Predator.dbl.setStats(guildCount)
+        ctx.send("Posted guild count")
     }
 
     @Command(description = "FAQ")
