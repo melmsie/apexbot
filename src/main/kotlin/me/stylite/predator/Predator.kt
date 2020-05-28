@@ -1,18 +1,13 @@
 package me.stylite.predator
 
 import me.devoxin.flight.api.CommandClient
-import java.io.FileInputStream
 import me.devoxin.flight.api.CommandClientBuilder
 import net.dv8tion.jda.api.entities.Activity
-import net.dv8tion.jda.api.sharding.DefaultShardManager
 import net.dv8tion.jda.api.sharding.DefaultShardManagerBuilder
 import net.dv8tion.jda.api.sharding.ShardManager
-import me.stylite.predator.Config
 import org.slf4j.Logger
-import me.stylite.predator.utils.Resources
 import org.discordbots.api.client.DiscordBotListAPI
 import org.slf4j.LoggerFactory
-import java.util.*
 
 object Predator {
     lateinit var shardManager: ShardManager
@@ -20,12 +15,11 @@ object Predator {
     lateinit var log: Logger
     lateinit var dbl: DiscordBotListAPI
 
-
     @ExperimentalStdlibApi
     @JvmStatic
     fun main(args: Array<String>) {
-
         val conf = Config
+
         commandHandler = CommandClientBuilder()
             .setPrefixes(conf.prefix)
             .registerDefaultParsers()
@@ -34,13 +28,13 @@ object Predator {
             .build()
 
         dbl = DiscordBotListAPI.Builder()
-            .token(Config.dblKey)
+            .token(conf.dblKey)
             .botId("702604525529202749")
             .build()
 
         log = LoggerFactory.getLogger("Predator")
         shardManager = DefaultShardManagerBuilder.createDefault(conf.token)
-            .addEventListeners(commandHandler, JdaEvents)
+            .addEventListeners(commandHandler)
             .setActivity(Activity.watching("the kill leader || ${conf.prefix.first()}help"))
             .build()
 

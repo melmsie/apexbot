@@ -13,5 +13,4 @@ object Config {
     val token = this["token"]
     val apiKey = this["apiKey"]
     val dblKey = this["dblkey"]
-
 }
