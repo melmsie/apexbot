@@ -13,6 +13,8 @@ class Misc : Cog {
         ctx.send("Pong!")
     }
 
+
+
     @Command(description = "Info on the bot")
     fun info(ctx: Context) {
         ctx.send("""
@@ -51,6 +53,6 @@ class Misc : Cog {
     @Command(description = "Get links for the bot")
     fun invite(ctx: Context) {
         val inviteLink = ctx.jda.getInviteUrl()
-        ctx.send("Invite me: <$inviteLink>\nJoin my support server: https://discord.gg/gmUwqDm")
+        ctx.send("Invite me: <$inviteLink>\nJoin my support server: https://discord.gg/HZP7fUs")
     }
 }

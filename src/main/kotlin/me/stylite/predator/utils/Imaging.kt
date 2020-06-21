@@ -115,8 +115,12 @@ object Imaging {
 
         gfx.drawImage(rankIcon, 300, 240, null)
 
+        val rankHeight = when {
+            rank.rankName == "Apex Predator" -> 260
+            else -> 280
+        }
         gfx.color = notQuiteWhite
-        gfx.drawString("${rank.rankName} (Division ${rank.rankDiv})", 280, 357 + font32Metrics.ascent)
+        gfx.drawString("${rank.rankName} (Division ${rank.rankDiv})", rankHeight, 357 + font32Metrics.ascent)
 
         val subTextMetrics = gfx.fontMetrics
         gfx.drawString("Ranked Score: ${rank.rankScore}", 280, 392 + subTextMetrics.ascent)

@@ -28,7 +28,7 @@ object Predator {
             .build()
 
         dbl = DiscordBotListAPI.Builder()
-            .token(conf.dblKey)
+            .token("conf.dblKey")
             .botId("702604525529202749")
             .build()
 
