@@ -8,8 +8,8 @@ object RandomItems {
         "EVA-8 Auto", "Mastiff Shotgun", "Mozambique Shotgun", "Peacekeeper",
         "RE-45 Auto", "P2020", "Wingman")
 
-    val legends = setOf("Bangalore", "Bloodhound", "Caustic", "Crypto", "Gibraltar", "Lifeline",
-        "Mirage", "Octane", "Pathfinder", "Revenant", "Wattson", "Wraith")
+    val legends = setOf("Bangalore", "Bloodhound", "Caustic", "Crypto", "Fuse", "Gibraltar", "Horizon",
+        "Lifeline", "Mirage", "Octane", "Pathfinder", "Rampart", "Revenant", "Wattson", "Wraith")
 
     val grenades = setOf("Frag", "Thermite", "Arc Star")
 

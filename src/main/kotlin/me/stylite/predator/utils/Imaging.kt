@@ -85,6 +85,7 @@ object Imaging {
         val heightAdjust = when {
             legendName == "Revenant" -> 61
             legendName == "Loba" -> 59
+            legendName == "Horizon" -> 63
             newHeight > 336 -> 78 - (newHeight - 336)
             newHeight < 336 -> 78 + (336 - newHeight)
             else -> 78

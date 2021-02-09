@@ -69,11 +69,14 @@ data class All(
     val Bloodhound: Bloodhound,
     val Caustic: Caustic,
     val Crypto: Crypto,
+    val Fuse: Fuse,
     val Gibraltar: Gibraltar,
+    val Horizon: Horizon,
     val Lifeline: Lifeline,
     val Mirage: Mirage,
     val Octane: Octane,
     val Pathfinder: Pathfinder,
+    val Rampart: Rampart,
     val Revenant: Revenant,
     val Wattson: Wattson,
     val Wraith: Wraith
@@ -89,11 +92,14 @@ data class Bangalore(val ImgAssets: ImgAssets)
 data class Bloodhound(val ImgAssets: ImgAssets)
 data class Caustic(val ImgAssets: ImgAssets)
 data class Crypto(val ImgAssets: ImgAssets)
+data class Fuse(val ImgAssets: ImgAssets)
 data class Gibraltar(val ImgAssets: ImgAssets)
+data class Horizon(val ImgAssets: ImgAssets)
 data class Lifeline(val ImgAssets: ImgAssets)
 data class Mirage(val ImgAssets: ImgAssets)
 data class Octane(val ImgAssets: ImgAssets, val `data`: List<Data>)
 data class Pathfinder(val ImgAssets: ImgAssets)
+data class Rampart(val ImgAssets: ImgAssets)
 data class Revenant(val ImgAssets: ImgAssets)
 data class Wattson(val ImgAssets: ImgAssets)
 data class Wraith(val ImgAssets: ImgAssets)
